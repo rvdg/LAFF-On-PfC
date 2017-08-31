@@ -1,0 +1,258 @@
+\documentclass[12pt]{article}
+
+\usepackage{amssymb}
+\usepackage{ifthen}
+\usepackage[table]{xcolor}
+\usepackage{minitoc}
+\usepackage{array}
+
+\definecolor{yellow}{cmyk}{0,0,1,0}
+\renewcommand{\arraystretch}{1.4}
+\newcommand{\R}{\mathbb{R}}
+
+\usepackage{colortbl}
+
+% Page size
+\setlength{\oddsidemargin}{-0.5in}
+\setlength{\evensidemargin}{-0.5in}
+\setlength{\textheight}{10.25in}
+\setlength{\textwidth}{7.0in}
+\setlength{\topmargin}{-1.35in}
+
+\renewcommand{\arraycolsep}{3pt}
+
+
+\input color_flatex
+
+\begin{document}
+\pagestyle{empty}
+
+
+\resetsteps % reset all definitions
+
+% Insert output from Spark webpage below
+
+
+\resetsteps      % Reset all the commands to create a blank worksheet  
+
+% Define the operation to be computed
+
+\renewcommand{\operation}{ \alpha := x^T y + \alpha }
+
+\renewcommand{\routinename}{\operation}
+
+% Step 1a: Precondition 
+
+\renewcommand{\precondition}{
+	\alpha = \widehat{\alpha}
+}
+
+% Step 1b: Postcondition 
+
+\renewcommand{\postcondition}{ 
+	\alpha = x^T y + \alpha
+}
+
+% Step 2: Invariant 
+% Note: Right-hand side of equalities must be updated appropriately
+
+\renewcommand{\invariant}{
+	\alpha = x_B^T y_B + \widehat \alpha
+}
+
+% Step 3: Loop-guard 
+
+\renewcommand{\guard}{
+	m( x_B ) < m( x )
+}
+
+% Step 4: Initialize 
+
+\renewcommand{\partitionings}{
+	$
+	x \rightarrow
+	\left(\begin{array}{c}
+	x_{T} \\ \whline 
+	x_{B}
+	\end{array}\right)
+	$
+	,
+	$
+	y \rightarrow
+	\left(\begin{array}{c}
+	y_{T} \\ \whline 
+	y_{B}
+	\end{array}\right)
+	$
+}
+
+\renewcommand{\partitionsizes}{
+	$ x_B $ has $ 0 $ rows,
+	$ y_B $ has $ 0 $ rows
+}
+
+% Step 5a: Repartition the operands 
+
+\renewcommand{\repartitionings}{
+	$  \left(\begin{array}{c}
+	x_T \\ \whline
+	x_B 
+	\end{array}\right) 
+	\rightarrow
+	\left(\begin{array}{c}
+	x_0 \\  
+	\chi_1 \\ \whline 
+	x_2
+	\end{array}\right)
+	$
+	,
+	$  \left(\begin{array}{c}
+	y_T \\ \whline
+	y_B 
+	\end{array}\right) 
+	\rightarrow
+	\left(\begin{array}{c}
+	y_0 \\  
+	\psi_1 \\ \whline 
+	y_2
+	\end{array}\right)
+	$
+}
+
+\renewcommand{\repartitionsizes}{
+	$ \chi_1 $ has $ 1 $ row,
+	$ \psi_1 $ has $ 1 $ row}
+
+% Step 5b: Move the double lines 
+
+\renewcommand{\moveboundaries}{
+	$  \left(\begin{array}{c}
+	x_T \\ \whline
+	x_B 
+	\end{array}\right) 
+	\leftarrow
+	\left(\begin{array}{c}
+	x_0 \\ \whline 
+	\chi_1 \\  
+	x_2
+	\end{array}\right) 
+	$
+	,
+	$  \left(\begin{array}{c}
+	y_T \\ \whline
+	y_B 
+	\end{array}\right) 
+	\leftarrow
+	\left(\begin{array}{c}
+	y_0 \\ \whline 
+	\psi_1 \\  
+	y_2
+	\end{array}\right) 
+	$
+}
+
+% Step 6: State before update
+% Note: The below needs editing consistent with loop-invariant!!!
+
+\renewcommand{\beforeupdate}{$ 
+		\alpha = x_2^T y_2 + \widehat \alpha
+		$}
+
+
+% Step 7: State after update
+% Note: The below needs editing consistent with loop-invariant!!!
+
+\renewcommand{\afterupdate}{$ 
+			\alpha = \chi_1 \times \psi_1 + x_2^T y_2 + \widehat \alpha
+			$}
+
+
+% Step 8: Insert the updates required to change the 
+%         state from that given in Step 6 to that given in Step 7
+% Note: The below needs editing!!!
+
+\renewcommand{\update}{
+	$
+	\begin{array}{l}          % do not delete this line 
+	\alpha := \chi_1 \times \psi_1 + \alpha
+	\end{array}               % do not delete this line 
+	$
+}
+
+
+
+
+
+\begin{center}
+	\FlaWorksheet
+\end{center}
+
+\newpage
+
+\begin{figure}[p]
+\begin{center}
+	\FlaWorksheetZero
+\end{center}
+\end{figure}
+
+\begin{figure}[p]
+\begin{center}
+	\FlaWorksheetOne
+\end{center}
+\end{figure}
+
+\begin{figure}[p]
+\begin{center}
+	\FlaWorksheetTwo
+\end{center}
+\end{figure}
+
+\begin{figure}[p]
+\begin{center}
+	\FlaWorksheetThree
+\end{center}
+\end{figure}
+
+\begin{figure}[p]
+	\begin{center}
+	\FlaWorksheetFour
+\end{center}
+\end{figure}
+
+\begin{figure}[p]
+	\begin{center}
+	\FlaWorksheetFive
+\end{center}
+\end{figure}
+
+\begin{figure}[p]
+	\begin{center}
+	\FlaWorksheetSix
+\end{center}
+\end{figure}
+
+\begin{figure}[p]
+	\begin{center}
+	\FlaWorksheetSeven
+\end{center}
+\end{figure}
+
+\begin{figure}[p]
+	\begin{center}
+	\FlaWorksheetEight
+\end{center}
+\end{figure}
+
+\begin{figure}[p]
+	\begin{center}
+	\FlaWorksheetNine
+\end{center}
+\end{figure}
+
+\begin{figure}[p]
+\begin{center}
+	\FlaAlgorithm
+\end{center}
+\end{figure}
+
+\end{document}
